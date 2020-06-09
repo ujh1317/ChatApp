@@ -70,7 +70,7 @@ public class ChatActivity extends AppCompatActivity {
 
         // specify an adapter (see also next example)
         String[] myDataset = {"test1", "test2", "test3", "test4"};
-        mAdapter = new MyAdapter(chatArrayList);
+        mAdapter = new MyAdapter(chatArrayList, stEmail);
         recyclerView.setAdapter(mAdapter);
 
         ChildEventListener childEventListener = new ChildEventListener() {

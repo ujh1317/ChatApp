@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private ArrayList<Chat> mDataset;
+    String stMyEmail = "";
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -24,9 +25,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
     }
 
+    @Override
+    public int getItemViewType(int position) {
+//        return super.getItemViewType(position);
+        if (mDataset.get(position).email.equals(stMyEmail)){
+            return 1;
+        }else
+            return 2;
+    }
+
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(ArrayList<Chat> myDataset) {
+    public MyAdapter(ArrayList<Chat> myDataset, String stEmail) {
         mDataset = myDataset;
+        this.stMyEmail = stEmail;
     }
 
     // Create new views (invoked by the layout manager)
@@ -36,6 +47,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.my_text_view, parent, false);
+        if (viewType == 1){
+            v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.right_text_view, parent, false);
+        }
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
     }

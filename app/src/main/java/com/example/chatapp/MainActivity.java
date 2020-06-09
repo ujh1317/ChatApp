@@ -66,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
                                     String stUserEmail = user.getEmail();
                                     String stUserName = user.getDisplayName();
                                     Log.d(TAG, "stUserEmail : " +stUserEmail+", stUserName : " +stUserName);
-                                    Intent in = new Intent(MainActivity.this, ChatActivity.class);
+
+                                    Intent in = new Intent(MainActivity.this, TabActivity.class);
                                     in.putExtra("email", stEmail);
                                     startActivity(in);
 //                                    updateUI(user);
