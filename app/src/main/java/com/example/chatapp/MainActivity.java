@@ -3,7 +3,9 @@ package com.example.chatapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     EditText etId, etPassword;
     private FirebaseAuth mAuth;
     ProgressBar progressBar;
+    FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
 
         etId = (EditText) findViewById(R.id.etId);
         etPassword = (EditText) findViewById(R.id.etPassword);
@@ -66,6 +71,11 @@ public class MainActivity extends AppCompatActivity {
                                     String stUserEmail = user.getEmail();
                                     String stUserName = user.getDisplayName();
                                     Log.d(TAG, "stUserEmail : " +stUserEmail+", stUserName : " +stUserName);
+
+                                    SharedPreferences sharedPref = getSharedPreferences("shared", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPref.edit();
+                                    editor.putString("email", stUserEmail);
+                                    editor.commit();
 
                                     Intent in = new Intent(MainActivity.this, TabActivity.class);
                                     in.putExtra("email", stEmail);
