@@ -19,7 +19,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Hashtable;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -122,6 +125,15 @@ public class MainActivity extends AppCompatActivity {
                                     Log.d(TAG, "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
 //                                    updateUI(user);
+
+                                    DatabaseReference myRef = database.getReference("message").child(user.getUid());
+                                    // email, text 구분해서 데이터 받기
+                                    Hashtable<String, String> numbers
+                                            = new Hashtable<String, String>();
+                                    numbers.put("email", user.getEmail());
+                                    myRef.setValue(numbers);
+                                    Toast.makeText(MainActivity.this, "register success", Toast.LENGTH_LONG).show();
+
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
